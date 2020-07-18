@@ -1,6 +1,6 @@
 const register = async app => {
   const expressApp = app.getHttpAdapter().getInstance();
-  await require('@react-ssr/core/lib/register')(expressApp);
+  await require('@react-ssr-easy/core/lib/register')(expressApp);
 };
 
 module.exports = register;

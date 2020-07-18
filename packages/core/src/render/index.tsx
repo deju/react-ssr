@@ -118,6 +118,7 @@ export default async function render(file: string, props: any): Promise<string> 
       </DocumentContext.Provider>,
       pageId,
       compressProps(props),
+      ssrConfig.htmlExtra || {}
     );
     return html;
   } catch (err) {

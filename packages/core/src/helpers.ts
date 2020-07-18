@@ -28,6 +28,10 @@ export interface Config {
   viewsDir: string;
   staticViews: string[];
   webpack?: (defaultConfig: webpack.Configuration, env: 'development' | 'production') => webpack.Configuration;
+  htmlExtra?: {
+    head?: string;
+    body?: string;
+  }
 }
 
 const getSsrConfig = (): Config => {
@@ -35,7 +39,7 @@ const getSsrConfig = (): Config => {
     id: 'default',
     distDir: '.ssr',
     viewsDir: 'views',
-    staticViews: [],
+    staticViews: []
   };
   const ssrConfigPath = path.join(cwd, 'ssr.config.js');
   if (existsSync(ssrConfigPath)) {

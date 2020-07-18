@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "react-ssr",
+  "name": "react-ssr-easy",
   "scripts": {
     "dev": "node dev"
   },

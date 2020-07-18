@@ -10,7 +10,7 @@ const Head = require('./head');
 
 const { ServerStyleSheet } = require('styled-components');
 
-export default (app: React.ReactElement, pageId: string, props: string) => {
+export default (app: React.ReactElement, pageId: string, props: string, htmlExtra: { head?: string; body?: string; }) => {
   const sheet = new ServerStyleSheet();
   try {
     const html = ReactDOMServer.renderToString(sheet.collectStyles(app));
@@ -20,7 +20,7 @@ export default (app: React.ReactElement, pageId: string, props: string) => {
     const scriptTags = $.html($('body script'));
     const bodyWithoutScriptTags = ($('body').html() || '').replace(scriptTags, '');
 
-    return `<!DOCTYPE html><html${convertAttrToString($('html').attr())}><head>${getHeadHtml(Head.rewind())}<link rel="preload" href="/_react-ssr/${pageId}.js" as="script"><link rel="preload" href="/_react-ssr/${pageId}.css" as="style"><link rel="stylesheet" href="/_react-ssr/${pageId}.css">${styleTags}</head><body${convertAttrToString($('body').attr())}><div id="react-ssr-root">${bodyWithoutScriptTags}</div><script id="react-ssr-script" src="/_react-ssr/${pageId}.js" data-props="${props}" defer></script>${scriptTags}</body></html>`;
+    return `<!DOCTYPE html><html${convertAttrToString($('html').attr())}><head>${getHeadHtml(Head.rewind())}<link rel="preload" href="/_react-ssr/${pageId}.js" as="script"><link rel="preload" href="/_react-ssr/${pageId}.css" as="style"><link rel="stylesheet" href="/_react-ssr/${pageId}.css">${styleTags}${htmlExtra.head || ''}</head><body${convertAttrToString($('body').attr())}><div id="react-ssr-root">${bodyWithoutScriptTags}</div><script id="react-ssr-script" src="/_react-ssr/${pageId}.js" data-props="${props}" defer></script>${scriptTags}${htmlExtra.body || ''}</body></html>`;
   } finally {
     sheet.seal();
   }

@@ -1,5 +1,5 @@
 {
-  "name": "@react-ssr/core",
+  "name": "@react-ssr-easy/core",
   "version": "0.24.0",
   "description": "React SSR as a view template engine",
   "repository": "git@github.com:saltyshiomix/react-ssr.git",

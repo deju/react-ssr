@@ -1,5 +1,5 @@
 {
-  "name": "@react-ssr/nestjs-express",
+  "name": "@react-ssr-easy/nestjs-express",
   "version": "0.24.0",
   "description": "React SSR as a view template engine",
   "repository": "git@github.com:saltyshiomix/react-ssr.git",

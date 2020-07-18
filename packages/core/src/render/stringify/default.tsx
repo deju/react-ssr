@@ -8,12 +8,12 @@ import {
 
 const Head = require('./head');
 
-export default (app: React.ReactElement, pageId: string, props: string) => {
+export default (app: React.ReactElement, pageId: string, props: string, htmlExtra: { head?: string; body?: string; }) => {
   const html = ReactDOMServer.renderToString(app);
 
   const $ = cheerio.load(html);
   const scriptTags = $.html($('body script'));
   const bodyWithoutScriptTags = ($('body').html() || '').replace(scriptTags, '');
 
-  return `<!DOCTYPE html><html${convertAttrToString($('html').attr())}><head>${getHeadHtml(Head.rewind())}<link rel="preload" href="/_react-ssr/${pageId}.js" as="script"><link rel="preload" href="/_react-ssr/${pageId}.css" as="style"><link rel="stylesheet" href="/_react-ssr/${pageId}.css"></head><body${convertAttrToString($('body').attr())}><div id="react-ssr-root">${bodyWithoutScriptTags}</div><script id="react-ssr-script" src="/_react-ssr/${pageId}.js" data-props="${props}" defer></script>${scriptTags}</body></html>`;
+  return `<!DOCTYPE html><html${convertAttrToString($('html').attr())}><head>${getHeadHtml(Head.rewind())}<link rel="preload" href="/_react-ssr/${pageId}.js" as="script"><link rel="preload" href="/_react-ssr/${pageId}.css" as="style"><link rel="stylesheet" href="/_react-ssr/${pageId}.css">${htmlExtra.head || ''}</head><body${convertAttrToString($('body').attr())}><div id="react-ssr-root">${bodyWithoutScriptTags}</div><script id="react-ssr-script" src="/_react-ssr/${pageId}.js" data-props="${props}" defer></script>${scriptTags}${htmlExtra.body || ''}</body></html>`;
 };
